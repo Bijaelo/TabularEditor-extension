@@ -13,7 +13,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TOMWrapperTest</RootNamespace>
     <AssemblyName>TOMWrapperTest</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <IsTestProject>true</IsTestProject>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -162,6 +163,8 @@
     <Compile Include="ObjectHandlingTests.cs" />
     <Compile Include="PowerBITests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Metadata\MetadataTestModelFactory.cs" />
+    <Compile Include="Metadata\MetadataIndexTests.cs" />
     <Compile Include="PropertyChangeTestGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

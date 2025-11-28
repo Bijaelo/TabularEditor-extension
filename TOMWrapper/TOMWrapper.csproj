@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TabularEditor</RootNamespace>
     <AssemblyName>TOMWrapper</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -168,6 +168,7 @@
     <Compile Include="TOMWrapper\CollectionHelper.cs" />
     <Compile Include="TOMWrapper\DeploymentMetadata.cs" />
     <Compile Include="TOMWrapper\ExtendedPropertyCollection.cs" />
+    <Compile Include="Metadata\TabularMetadataIndex.cs" />
     <Compile Include="TOMWrapper\Base\WrapperBase.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
