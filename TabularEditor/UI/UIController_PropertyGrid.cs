@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.ComponentModel.Com2Interop;
 using TabularEditor.PropertyGridUI;
+using TabularEditor.PropertyGridExtension;
 using TabularEditor.TOMWrapper;
 using TabularEditor.UI.Dialogs;
 
@@ -27,7 +28,15 @@ namespace TabularEditor.UI
         public void PropertyGrid_UpdateFromSelection()
         {
             var expanded = UI.PropertyGrid.GetExpandedItemLabels();
-            UI.PropertyGrid.SelectedObjects = UI.TreeView.SelectedNodes.Select(n => n.Tag).ToArray();
+            var selected = UI.TreeView.SelectedNodes.Select(n => n.Tag).ToArray();
+            if (selected.Length > 1)
+            {
+                UI.PropertyGrid.SelectedObject = new MultiSelectProxy(selected);
+            }
+            else
+            {
+                UI.PropertyGrid.SelectedObject = selected.FirstOrDefault();
+            }
             UI.PropertyGrid.ExpandItemsByLabel(expanded);
         }
 

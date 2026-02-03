@@ -95,7 +95,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>TabularEditor.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -287,6 +287,7 @@
     <Compile Include="PropertyGrid\NavigatablePropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PropertyGrid\MultiSelectProxy.cs" />
     <Compile Include="TextServices\CSharpLexer.cs" />
     <Compile Include="TextServices\ExpressionParser.cs" />
     <Compile Include="UIServices\ModelTelemetry.cs" />
