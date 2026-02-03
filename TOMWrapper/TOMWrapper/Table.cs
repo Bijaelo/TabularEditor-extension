@@ -329,8 +329,10 @@ namespace TabularEditor.TOMWrapper
         /// <summary>
         /// Provides a convenient way to access the Row Level Filters assigned to this table across different roles.
         /// </summary>
-        [Browsable(true), DisplayName("Row Level Security"), Category("Translations, Perspectives, Security"), IntelliSense("Provides a convenient way to access the Row Level Filters assigned to this table across different roles.")]
+        [Browsable(true), MergableProperty(true), DisplayName("Row Level Security"), Category("Translations, Perspectives, Security"),
+        IntelliSense("Provides a convenient way to access the Row Level Filters assigned to this table across different roles.")]
         public TableRLSIndexer RowLevelSecurity { get; private set; }
+
 
         /// <summary>
         /// Gets a string that may be used for referencing the table in a DAX expression.
@@ -442,7 +444,8 @@ namespace TabularEditor.TOMWrapper
         /// <summary>
         /// Provides a convenient way to get or set the Object-Level permissions assigned to this table across different roles.
         /// </summary>
-        [DisplayName("Object Level Security"), Category("Translations, Perspectives, Security"), IntelliSense("Provides a convenient way to get or set the Object-Level permissions assigned to this table across different roles.")]
+        [Browsable(true), MergableProperty(true), DisplayName("Object Level Security"), Category("Translations, Perspectives, Security"),
+        IntelliSense("Provides a convenient way to get or set the Object-Level permissions assigned to this table across different roles.")]
         public TableOLSIndexer ObjectLevelSecurity
         {
             get

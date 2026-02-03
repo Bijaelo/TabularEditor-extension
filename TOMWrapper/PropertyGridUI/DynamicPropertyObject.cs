@@ -38,7 +38,13 @@ namespace TabularEditor.PropertyGridUI
             var multi = context.Instance.GetType().IsArray;
 
             IEnumerable<DynamicPropertyDescriptor> pds;
-
+            #if DEBUG
+            if (multi && value is IDynamicPropertyObject)
+            {
+                var names = original.Select(p => p.Name).ToList();
+                System.Diagnostics.Debug.WriteLine($"DynamicPropertyConverter: {value.GetType().Name} props = {string.Join(", ", names)}");
+            }
+            #endif
             if (value is IDynamicPropertyObject)
             {
                 var obj = value as IDynamicPropertyObject;

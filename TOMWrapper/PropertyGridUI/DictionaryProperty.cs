@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.ComponentModel;
 using System.Globalization;
@@ -45,9 +45,17 @@ namespace TabularEditor.PropertyGridUI
     {
         public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
         {
+            // Multi-select uses object[]; indexer expansion assumes a single object and would throw.
+            if (context?.Instance is object[]) return new PropertyDescriptorCollection(null);
+            // PropertyGrid can probe with null/unsupported values; return empty to avoid NREs.
+            if (context?.PropertyDescriptor == null) return new PropertyDescriptorCollection(null);
+
             var pdc = new PropertyDescriptorCollection(null);
             var dict = value as IExpandableIndexer;
-            var isReadOnly = !(context.Instance as IDynamicPropertyObject).Editable(context.PropertyDescriptor.Name);
+            if (dict == null) return new PropertyDescriptorCollection(null);
+
+            var dpo = context.Instance as IDynamicPropertyObject;
+            var isReadOnly = dpo == null || !dpo.Editable(context.PropertyDescriptor.Name);
 
             foreach(var key in dict.Keys.OrderBy(k => dict.GetDisplayName(k)))
             {

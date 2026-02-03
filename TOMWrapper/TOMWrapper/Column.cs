@@ -140,8 +140,8 @@ namespace TabularEditor.TOMWrapper
 
             base.DeleteLinkedObjects(isChildOfDeleted);
         }
-
-        [DisplayName("Object Level Security"), Category("Translations, Perspectives, Security")]
+        
+        [Browsable(true), MergableProperty(true), DisplayName("Object Level Security"), Category("Translations, Perspectives, Security")]
         public ColumnOLSIndexer ObjectLevelSecurity { get; private set; }
 
 
