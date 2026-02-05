@@ -31,7 +31,14 @@ namespace TabularEditor.UI
             var selected = UI.TreeView.SelectedNodes.Select(n => n.Tag).ToArray();
             if (selected.Length > 1)
             {
-                UI.PropertyGrid.SelectedObject = new MultiSelectProxy(selected);
+                if (MultiSelectProxy.RequiresProxy(selected))
+                {
+                    UI.PropertyGrid.SelectedObject = new MultiSelectProxy(selected);
+                }
+                else
+                {
+                    UI.PropertyGrid.SelectedObjects = selected;
+                }
             }
             else
             {

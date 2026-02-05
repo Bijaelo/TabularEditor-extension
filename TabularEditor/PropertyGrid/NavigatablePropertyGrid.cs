@@ -47,6 +47,20 @@ namespace TabularEditor.PropertyGridExtension
                     }
                 }
             }
+            else if (item.PropertyDescriptor is MergedPropertyDescriptor mpd && mpd.InnerDescriptor is DynamicPropertyDescriptor innerDpd)
+            {
+                if (innerDpd.CustomActions != null && innerDpd.CustomActions.Count > 0)
+                {
+                    foreach (var act in innerDpd.CustomActions)
+                    {
+                        if (act.Enabled())
+                        {
+                            hasItems = true;
+                            this.ContextMenuStrip.Items.Add(act.Name).Click += (s, e2) => act.Execute();
+                        }
+                    }
+                }
+            }
             e.Cancel = !hasItems;
         }
 
