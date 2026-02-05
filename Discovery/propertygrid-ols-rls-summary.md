@@ -3,7 +3,8 @@
 ## PropertyGrid UI + binding
 - The visual control is `TabularEditor.PropertyGridExtension.NavigatablePropertyGrid`, a thin subclass of WinForms `PropertyGrid`.
 - Selection wiring happens in `TabularEditor/UI/UIController_PropertyGrid.cs` via `PropertyGrid_UpdateFromSelection()`, which sets:
-  `UI.PropertyGrid.SelectedObjects = UI.TreeView.SelectedNodes.Select(n => n.Tag).ToArray();`
+  - Single-select: `UI.PropertyGrid.SelectedObject = ...`
+  - Multi-select: `UI.PropertyGrid.SelectedObject = new MultiSelectProxy(...)` (proxy merge bypass)
 
 ## How properties are discovered and filtered
 - Properties come from .NET TypeDescriptor/TypeConverter for the selected objects.
@@ -34,16 +35,18 @@
 - `IndexerConverter.ConvertTo(...)` does not run because the OLS/RLS row never makes it into the merged list, so the placeholder text (“Multiple objects selected.”) is never shown.
 - Switching from multi‑select to single‑select may tear down internal editor threads; normal WinForms behavior (exit code 0) and not an error.
 
-## Remediation history (so far)
+## Remediation history
 - Added guards in `IndexerConverter.GetProperties(...)` to avoid NREs on multi‑select.
-- Result: no exceptions, but OLS/RLS row still missing because merge drops it.
+- Result: no exceptions, but OLS/RLS row still missing because WinForms merge drops it.
 
 ## Current remediation (implemented)
-- **Bypass WinForms merge** for multi‑select using a proxy descriptor:
+- **MultiSelectProxy is now an implemented feature** that replaces WinForms merge during multi‑select:
   - `TabularEditor/PropertyGrid/MultiSelectProxy.cs` implements `ICustomTypeDescriptor`.
   - `PropertyGrid_UpdateFromSelection()` uses `SelectedObject = new MultiSelectProxy(...)` for multi‑select.
   - The proxy explicitly preserves OLS/RLS in the merged list when type‑compatible.
-- This makes the placeholder text reliable and keeps OLS/RLS visible for multi‑select.
+- **Behavioral difference vs previous implementation**:
+  - Previous: WinForms merge could drop OLS/RLS rows; placeholder text never appeared.
+  - Now: OLS/RLS rows are reliably present in multi‑select and show the placeholder text.
 
 ## Files touched/inspected
 - `TabularEditor/PropertyGrid/NavigatablePropertyGrid.cs`
@@ -69,5 +72,5 @@
 
 ## Relationship to original bulk-edit goal
 - Bulk-editing OLS/RLS depends on the PropertyGrid showing the OLS/RLS property row during multi-select.
-- The proxy strategy restores the row and placeholder, unblocking multi‑select UI surface.
+- The proxy strategy restores the row and placeholder, unblocking the multi‑select UI surface.
 - True bulk‑edit behavior still requires specific setter logic for OLS/RLS across multiple objects.

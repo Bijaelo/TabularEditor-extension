@@ -10,7 +10,9 @@ This file lists each property/type referenced in the discovery summary and where
 - Selection binding to PropertyGrid
   - File: `TabularEditor/UI/UIController_PropertyGrid.cs`
   - Method: `PropertyGrid_UpdateFromSelection()`
-  - Behavior: sets `UI.PropertyGrid.SelectedObjects` from tree selection
+  - Behavior:
+    - Single-select: sets `UI.PropertyGrid.SelectedObject`
+    - Multi-select: sets `UI.PropertyGrid.SelectedObject = new MultiSelectProxy(...)`
 
 - Multi-select bypass (proxy descriptor)
   - File: `TabularEditor/PropertyGrid/MultiSelectProxy.cs`
